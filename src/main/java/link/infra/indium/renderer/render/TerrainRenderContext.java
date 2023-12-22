@@ -17,7 +17,8 @@ import me.jellysquid.mods.sodium.client.render.chunk.compile.buffers.ChunkModelB
 import me.jellysquid.mods.sodium.client.render.chunk.compile.pipeline.BlockOcclusionCache;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderCache;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderContext;
-import me.jellysquid.mods.sodium.client.render.chunk.terrain.material.Material;
+import me.jellysquid.mods.sodium.client.render.chunk.terrain.material.*;
+import me.jellysquid.mods.sodium.client.render.chunk.translucent_sorting.TranslucentGeometryCollector;
 import me.jellysquid.mods.sodium.client.render.chunk.vertex.format.ChunkVertexEncoder;
 import me.jellysquid.mods.sodium.client.world.WorldSlice;
 import net.caffeinemc.mods.sodium.api.util.ColorARGB;
@@ -37,6 +38,7 @@ public class TerrainRenderContext extends AbstractBlockRenderContext {
 
 	private Vector3fc origin;
 	private Vec3d modelOffset;
+	private TranslucentGeometryCollector collector;
 
 	public TerrainRenderContext(BlockRenderCache renderCache) {
 		WorldSlice worldSlice = renderCache.getWorldSlice();
@@ -85,6 +87,11 @@ public class TerrainRenderContext extends AbstractBlockRenderContext {
 
 		ChunkModelBuilder builder = buffers.get(material);
 		ModelQuadFacing normalFace = quad.normalFace();
+
+		if (material == DefaultMaterials.TRANSLUCENT && this.collector != null) {
+			this.collector.appendQuad(quad.packedFaceNormal(), vertices, normalFace);
+		}
+
 		var vertexBuffer = builder.getVertexBuffer(normalFace);
 		vertexBuffer.push(vertices, material);
 
@@ -125,6 +132,7 @@ public class TerrainRenderContext extends AbstractBlockRenderContext {
 		try {
 			this.origin = ctx.origin();
 			this.modelOffset = ctx.state().getModelOffset(ctx.world(), ctx.pos());
+			this.collector = ctx.collector();
 
 			aoCalc.clear();
 			blockInfo.prepareForBlock(ctx.state(), ctx.pos(), ctx.seed(), ctx.model().useAmbientOcclusion());

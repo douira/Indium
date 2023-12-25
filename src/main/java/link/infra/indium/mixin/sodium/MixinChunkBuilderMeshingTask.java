@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * The main injection point into Sodium - here we stop Sodium from rendering FRAPI block models, and do it ourselves
+ * The main injection point into Sodium - here we stop Sodium from rendering FRAPI block models, and do it ourselves.
  */
 @Mixin(ChunkBuilderMeshingTask.class)
 public abstract class MixinChunkBuilderMeshingTask extends ChunkBuilderTask<ChunkBuildOutput> {

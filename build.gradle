@@ -44,6 +44,7 @@ repositories {
 	maven {
 		url = "https://api.modrinth.com/maven"
 	}
+	mavenLocal()
 }
 
 dependencies {
@@ -62,7 +63,9 @@ dependencies {
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
 
-	modImplementation "maven.modrinth:sodium:mc${project.sodium_minecraft_version}-${project.sodium_version}"
+		// modImplementation "maven.modrinth:sodium:mc${project.sodium_minecraft_version}-${project.sodium_version}"
+		// modImplementation "me.jellysquid.mods:sodium:${project.sodium_version}" // for maven local builds
+		modImplementation files("libs/sodium-fabric-mc1.20.3-0.5.5+git.ba00170.jar")
 }
 
 processResources {

@@ -1,3 +1,5 @@
+This branch of Indium includes a build of sodium generated from this [public GH Actions run](https://github.com/douira/sodium-fabric/actions/runs/7324964518).
+
 # Indium
 Indium is an addon for the rendering optimisation mod [Sodium](https://modrinth.com/mod/sodium), providing support for the Fabric Rendering API. The Fabric Rendering API is required for many mods that use advanced rendering effects, and is currently not supported by Sodium directly. Indium is based upon the reference implementation Indigo, which is part of Fabric API with source available [here](https://github.com/FabricMC/fabric/tree/1.17/fabric-renderer-indigo). (licensed Apache 2.0)
 
